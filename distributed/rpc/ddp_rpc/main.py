@@ -146,6 +146,8 @@ def run_worker(rank, world_size):
             fut.wait()
     elif rank <= 1:
         # Initialize process group for Distributed DataParallel on trainers.
+        # DDP是可以只创建在trainer上面的，这是一个强大的功能
+        # 需要阅读DDP的源码，学习更高级的使用
         dist.init_process_group(
             backend="gloo", rank=rank, world_size=2, init_method="tcp://localhost:29500"
         )
